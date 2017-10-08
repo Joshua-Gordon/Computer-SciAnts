@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Main {
 
-    public static final int speed = 100;
+    public static final int speed = 1;
 
     public static void main(String[] args) {
         Grid g = new Grid(32);
@@ -10,14 +10,12 @@ public class Main {
         g.render();
         g.update();
         g.update();
-        g.addQueen(5, 3, Color.BLUE);
-        g.addQueen(28,15,Color.RED);
-        ((Queen)(g.entities[28][15])).giveFood(100);
-        ((Queen)(g.entities[5][3])).giveFood(100);
-        g.addFood(11,11,100);
-        g.addFood(15,8,500);
-        g.addFood(14, 5, 1000);
-
+        g.addQueen(5, 3, 100, Color.BLUE);
+        g.addQueen(28,15, 100, Color.RED);
+        g.addQueen(14, 18, 100, Color.GREEN);
+        g.addRandomFood();
+        g.addRandomFood();
+        g.addRandomFood();
         long dt = 0;
         long now;
         while(true) {

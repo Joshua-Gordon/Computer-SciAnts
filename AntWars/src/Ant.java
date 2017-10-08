@@ -79,7 +79,7 @@ public class Ant extends Entity implements InfoSharing, Militaristic{
                     }
                 }
         } else {
-            System.out.println(foodCarried);
+            //System.out.println(foodCarried);
             moveTowardPoint(grid, queenLocation[0],queenLocation[1]);
             if(mag(new int[]{queenLocation[0]-x,queenLocation[1]-y}) < 2) {
                 try {

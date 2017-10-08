@@ -7,13 +7,15 @@ public class Queen extends Entity {
     double food;
     Color team;
 
-    public Queen(int x, int y, Color team) {
+    public Queen(int x, int y, int food, Color team) {
         super(x, y, "AntWars/res/queen.png");
         rand = new Random();
-        food = 5;
+        this.food = food;
         this.team = team;
         sprite = Utilities.colorImage(sprite,team);
     }
+
+
 
     @Override
     public void update(Grid grid) {

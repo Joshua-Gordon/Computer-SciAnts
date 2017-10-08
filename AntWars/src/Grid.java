@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class Grid {
 
@@ -114,10 +115,10 @@ public class Grid {
         }
     }
 
-    public boolean addQueen(int x, int y, Color team) {
+    public boolean addQueen(int x, int y, int food, Color team) {
         try {
             spaces[x][y] = true;
-            entities[x][y] = new Queen(x, y, team);
+            entities[x][y] = new Queen(x, y, food, team);
             return true;
         } catch (ArrayIndexOutOfBoundsException aioobe) {
             return false;
@@ -143,6 +144,18 @@ public class Grid {
         }
         System.err.println("Couldn't add food");
         return false;
+    }
+
+    public boolean addRandomFood() {
+        Random r = new Random();
+        int x = r.nextInt(spaces.length);
+        int y = r.nextInt(spaces[0].length);
+        if(spaces[x][y]) return false;
+        int amount = (int)Math.round(r.nextInt(500) + r.nextGaussian()*100); //500 +- 100
+        spaces[x][y] = true;
+        entities[x][y] = new Food(x,y,amount);
+        return true;
+
     }
 
 }
