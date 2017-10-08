@@ -6,7 +6,7 @@ public class Food extends Entity implements InfoSharing{
     private int[][] here;
 
     public Food(int x, int y, int amount) {
-        super(x, y, "res/nugs.png");
+        super(x, y, "AntWars/res/nugs.png");
         this.amount = amount;
         here = new int[Grid.spaces.length][Grid.spaces[0].length];
         for(int x0 = 0; x0 < here.length; x0++) {

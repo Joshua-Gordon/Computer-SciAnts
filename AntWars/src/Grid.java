@@ -33,7 +33,7 @@ public class Grid {
     private void initialize() {
         screen = new JLabel();
         try {
-            empty = ImageIO.read(new File("res/empty.png"));
+            empty = ImageIO.read(new File("AntWars/res/empty.png"));
         } catch (IOException e) {
             System.err.println("Couldn't read empty image");
         }

@@ -1,12 +1,13 @@
 import java.awt.*;
 import java.util.Random;
 
-public class Ant extends Entity implements InfoSharing{
+public class Ant extends Entity implements InfoSharing, Militaristic{
 
     Color team;
     public final int FOOD_TAKEN_AMOUNT = 5;
     public final int ANT_LIFESPAN = 100;
     int life = 0;
+    int combatEffectiveness;
 
 
     int foodCarried;
@@ -17,14 +18,14 @@ public class Ant extends Entity implements InfoSharing{
     private int[][] foodLocations;
 
     public Ant(int x, int y, Color team, int[] queenLocation) {
-        super(x,y,0,"res/ant.png");
+        super(x,y,0,"AntWars/res/ant.png");
         this.team = team;
         carryCapacity = 15;
         this.queenLocation = queenLocation;
         init();
     }
     public Ant(int x, int y, Color team, int maxCarry, int[] queenLocation) {
-        super(x,y,0,"res/ant.png");
+        super(x,y,0,"AntWars/res/ant.png");
         this.team = team;
         carryCapacity = maxCarry;
         this.queenLocation = queenLocation;
@@ -34,6 +35,7 @@ public class Ant extends Entity implements InfoSharing{
     private void init() {
         sprite = Utilities.colorImage(sprite,team);
         foodCarried = 0;
+        combatEffectiveness = 10 + (int)Math.round(new Random().nextGaussian()*5); //10 +- 5
         closestFood = null;
         foodLocations = new int[Grid.spaces.length][Grid.spaces.length];
         for(int x = 0; x < foodLocations.length; x++) {
@@ -128,8 +130,12 @@ public class Ant extends Entity implements InfoSharing{
             for(int y0 = -1; y0 < 2; y0++) {
                 try{
                     if(x0 != 0 && y0 != 0 && g.entities[x0 + x][y0 + y] instanceof InfoSharing) {
-                        //System.out.println("Found something!");
-                        shareInfo((InfoSharing)g.entities[x0 + x][y0 + y]);
+                        Entity e = g.entities[x0 + x][y0 + y];
+                        if(((InfoSharing) e).getTeam().equals(team) || ((InfoSharing) e).getTeam().equals(Color.BLACK)) {
+                            shareInfo((InfoSharing) g.entities[x0 + x][y0 + y]);
+                        } else {
+                            fight(g,((Militaristic) e));
+                        }
                     }
                     //System.out.println("x0: " + x0 + "\ny0: " + y0);
                 } catch (ArrayIndexOutOfBoundsException aioobe) {
@@ -180,8 +186,26 @@ public class Ant extends Entity implements InfoSharing{
         }
     }
 
+    public void fight(Grid g,Militaristic m) {
+        if(this.combatEffectiveness < m.getCombatEffectiveness()) {
+            die(g);
+            return;
+        }
+        this.combatEffectiveness -= m.getCombatEffectiveness();
+    }
+
     @Override
     public int[][] getInfo() {
         return foodLocations;
+    }
+
+    @Override
+    public int getCombatEffectiveness() {
+        return 0;
+    }
+
+    @Override
+    public void fight(Militaristic other) {
+
     }
 }

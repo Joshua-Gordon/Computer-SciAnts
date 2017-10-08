@@ -8,7 +8,7 @@ public class Queen extends Entity {
     Color team;
 
     public Queen(int x, int y, Color team) {
-        super(x, y, "res/queen.png");
+        super(x, y, "AntWars/res/queen.png");
         rand = new Random();
         food = 5;
         this.team = team;
